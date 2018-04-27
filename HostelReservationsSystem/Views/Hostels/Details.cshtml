@@ -1,0 +1,67 @@
+﻿@model HostelReservationsSystem.Models.Hostel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Hostel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HostelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HostelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HostelCat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HostelCat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AreaOfHostel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreaOfHostel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Hid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

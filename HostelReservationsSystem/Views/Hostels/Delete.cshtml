@@ -1,0 +1,14 @@
+﻿@model HostelReservationsSystem.Models.Hostel
+
+<h2>Delete Hostel</h2>
+@using (Html.BeginForm("Delete", "Hostels", FormMethod.Post, new {id = "popupForm"}))
+{
+    @Html.HiddenFor(a=>a.Hid)
+    <div class="form-control">
+        <label>Hostel Name</label>
+        <p>@Model.HostelName</p>
+    </div>
+    <div>
+        <input type="submit" value="Delete"/>
+    </div>
+}

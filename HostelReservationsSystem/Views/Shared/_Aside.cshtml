@@ -1,0 +1,68 @@
+﻿	<!-- Left panel : Navigation area -->
+<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+<aside id="left-panel">
+
+	<!-- User info -->
+	@{ Html.RenderPartial("_CurrentUser"); }
+	<!-- end user info -->
+	<!-- NAVIGATION : This navigation is also responsive
+
+	To make this navigation dynamic please make sure to link the node
+	(the reference to the nav > ul) after page load. Or the navigation
+	will not initialize.
+	-->
+	<nav>
+		<!-- NOTE: Notice the gaps after each icon usage <i></i>..
+		Please note that these links work a bit different than
+		traditional href="" links. See documentation for details.
+		-->
+
+		<ul>
+			<li class="@Html.RouteIf("hindex", "active")">
+				<a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+				<ul>
+					<li class="@Html.RouteIf("hindex", "active")">
+						<a href="@Url.Action("hindex", "home")" title="Dashboard"><span class="menu-item-parent">Analytics Dashboard</span></a>
+					</li>
+				   
+				</ul>
+				
+			</li>
+			<li class="top-menu-invisible @Html.RouteIf("hostels", "active" )">
+				<a href="#"><i class="fa fa-lg fa-fw fa-building "></i> <span class="menu-item-parent">Hostels</span></a>
+				<ul>
+					<li class="@Html.RouteIf("index", "active")">
+						<a href="@Url.Action("index", "Hostels")" title="Dashboard"><span class="menu-item-parent">View Hostel</span></a>
+					</li>
+					<li class="@Html.RouteIf("create", "active")">
+						<a href="@Url.Action("Create", "Hostels")" title="Dashboard"><span class="menu-item-parent">Add Information</span></a>
+					</li>
+				</ul>
+			</li>
+	
+			<li class="@Html.RouteIf("misc", "active")">
+				<a href="#"><i class="fa fa-lg fa-fw fa-windows"></i> <span class="menu-item-parent">Miscellaneous</span></a>
+				<ul>
+				   
+					<li>
+						<a href="@Url.Action("login", "account")" target="_top">Login</a>
+					</li>
+					<li>
+						<a href="@Url.Action("register", "account")" target="_top">Register</a>
+					</li>
+					<li>
+						<a href="@Url.Action("lock", "account")" target="_top">Locked Screen</a>
+					</li>
+				  
+				</ul>
+			</li>
+			
+
+		</ul>
+	</nav>
+	<span class="minifyme" data-action="minifyMenu">
+		<i class="fa fa-arrow-circle-left "></i>
+	</span>
+
+</aside>
+<!-- END NAVIGATION -->

@@ -1,0 +1,197 @@
+﻿
+@model IEnumerable<HostelReservationsSystem.Models.Hostel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="content" class="tableContainer">
+    <div>
+        <a class="popup btn btn-info" href="/Hostels/Create/0">Add New Hostel</a>
+        @*@Html.ActionLink("Create New", "Create")*@
+    </div>
+    <br />
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Hostel Record </h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+
+                            <table class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th data-hide="expand">Hostel Name</th>
+                                        <th data-class="expand"><i class="fa fa-fw fa-user"></i> Hostel Catagory</th>
+                                        <th data-hide="phone"><i class="fa fa-fw fa-phone "></i> Phone</th>
+                                        <th data-hide="phone,tablet"><i class="fa fa-fw fa-envelope"></i> Email</th>
+                                        <th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker "></i> Area Of Hostel</th>
+                                        <th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker "></i> Address</th>
+                                        <th><i class="fa fa-fw fa-edit "></i>Action</th>
+                                        <th><i class="fa fa-fw fa-trash "></i>Action</th>
+                                        @*<td></td>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HostelName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HostelCat)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AreaOfHostel)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Address)
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-warning" onclick="EditHostelRecord()"><span class="glyphicon glyphicon-edit"></span></a>
+
+                                                @*@Html.ActionLink("Edit", "Edit", new { id = item.Hid })*@
+                                            </td>
+                                            <td>
+                                                <a href="/hostels/delete/" class="btn btn-danger" onclick="DeleteHostelRecord()"><span class="glyphicon glyphicon-trash"></span></a>
+                                                @*@Html.ActionLink("Delete", "Delete", new { id = item.Hid })*@
+                                            </td>
+                                            @*<td>
+                                                    @Html.ActionLink("Details", "Details", new { id = item.Hid })
+                                                </td>*@
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+            </article>
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- end row -->
+
+    </section>
+    <!-- end widget grid -->
+
+
+</div>
+@section pagespecific {
+    <script>
+        $(document).ready(function() {
+            var oTable = $('#dt_basic').DataTable({
+                "ajax": {
+                    "url": '/hostels/GetHostel/',
+                    "type": "get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "HostelName", "autoWidth": true },
+                    { "data": "HostelCat", "autoWidth": true },
+                    { "data": "Phone", "autoWidth": true },
+                    { "data": "Email", "autoWidth": true },
+                    { "data": "AreaOfHostel", "autoWidth": true },
+                    { "data": "Address", "autoWidth": true }
+                ]
+            });
+            $('.tableContainer').on('click',
+                'a.popup',
+                function(e) {
+                    e.preventDefault();
+                    OpenPopup($(this).attr('href'));
+                });
+
+            function OpenPopup(pageUrl) {
+                var $pageContent = $('<div/>');
+                $pageContent.load(pageUrl,function() {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+                $dialog = $('<div class="popupWindow" style="overflow:auto,background: #a9a9a9"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: false,
+                        autoOpen: false,
+                        resizable: false,
+                        model: true,
+                        title: 'Hostel Reservation System',
+                        height: 450,
+                        width: 380,
+                        close: function() {
+                            $dialog.dialog('destroy').remove();
+                        }
+                    });
+                $('.popupWindow').on('submit',
+                    '#popupForm',
+                    function(e) {
+                        var url = $('#popupForm')[0].action;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: $('#popupForm').serialize(),
+                            success: function(data) {
+                                if (data.status) {
+                                    $dialog.dialog('close');
+                                    oTable.ajax.reload();
+                                }
+                            }
+                        });
+                    });
+                $dialog.dialog('open');
+
+            }
+        })
+
+
+    </script>
+}  
+    
+    
+    
+   
