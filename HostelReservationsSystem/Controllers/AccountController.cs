@@ -88,6 +88,7 @@ namespace HostelReservationsSystem.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
+                   
             }
         }
 
@@ -473,7 +474,7 @@ namespace HostelReservationsSystem.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("HIndex", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

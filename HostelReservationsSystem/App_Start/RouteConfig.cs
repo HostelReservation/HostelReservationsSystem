@@ -11,8 +11,8 @@ namespace HostelReservationsSystem
             routes.LowercaseUrls = true;
             routes.MapRoute("Default", "{controller}/{action}/{id}", new
             {
-                controller = "Home",
-                action = "HIndex",
+                controller = "Account",
+                action = "Login",
                 id = UrlParameter.Optional
             }).RouteHandler = new DashRouteHandler();
         }
